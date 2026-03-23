@@ -1,0 +1,16 @@
+{% extends 'fichas/base.html' %}
+
+{% block content %}
+<h1>Dueños</h1>
+
+<a href="{% url 'fichas:dueno_crear' %}">Nuevo</a>
+
+<ul>
+{% for d in object_list %}
+    <li>{{ d.nombre }}</li>
+{% empty %}
+    <li>No hay datos</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

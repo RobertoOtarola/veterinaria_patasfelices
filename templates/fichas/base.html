@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Veterinaria{% endblock %}</title>
+</head>
+<body>
+<nav>
+    <a href="{% url 'fichas:dueno_lista' %}">Dueños</a>
+    <a href="{% url 'fichas:mascota_lista' %}">Mascotas</a>
+</nav>
+
+{% block content %}{% endblock %}
+</body>
+</html>
