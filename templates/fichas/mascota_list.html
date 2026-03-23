@@ -1,0 +1,16 @@
+{% extends 'fichas/base.html' %}
+
+{% block content %}
+<h1>Mascotas</h1>
+
+<a href="{% url 'fichas:mascota_crear' %}">Nueva mascota</a>
+
+<ul>
+{% for m in object_list %}
+    <li>{{ m.nombre }} ({{ m.dueno.nombre }})</li>
+{% empty %}
+    <li>No hay mascotas</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

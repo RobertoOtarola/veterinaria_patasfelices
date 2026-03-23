@@ -1,7 +1,10 @@
 from django.urls import reverse_lazy
 from django.views.generic import *
 from .models import Dueno, Mascota
+from django.views.generic import TemplateView
 
+class HomeView(TemplateView):
+    template_name = "fichas/inicio.html"
 
 # ===== DUEÑO =====
 class DuenoListView(ListView):
@@ -53,3 +56,4 @@ class MascotaUpdateView(UpdateView):
 class MascotaDeleteView(DeleteView):
     model = Mascota
     success_url = reverse_lazy('fichas:mascota_lista')
+

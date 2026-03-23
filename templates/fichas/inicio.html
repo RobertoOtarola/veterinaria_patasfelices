@@ -1,0 +1,9 @@
+{% extends 'fichas/base.html' %}
+
+{% block content %}
+<h1>Bienvenido a PatasFelices</h1>
+
+<a href="{% url 'fichas:dueno_lista' %}">Ver Dueños</a>
+<a href="{% url 'fichas:mascota_lista' %}">Ver Mascotas</a>
+
+{% endblock %}
