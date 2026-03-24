@@ -1,0 +1,21 @@
+{% extends 'fichas/base.html' %}
+
+{% block title %}Detalle Consulta — PatasFelices{% endblock %}
+
+{% block content %}
+<h1>Detalle de Consulta Médica</h1>
+
+<p><strong>Mascota:</strong> <a href="{% url 'fichas:mascota_detalle' object.mascota.pk %}">{{ object.mascota.nombre }}</a></p>
+<p><strong>Fecha:</strong> {{ object.fecha }}</p>
+<p><strong>Motivo:</strong> {{ object.motivo }}</p>
+<p><strong>Diagnóstico:</strong> {{ object.diagnostico }}</p>
+<p><strong>Tratamiento:</strong> {{ object.tratamiento|default:"No especificado" }}</p>
+<p><strong>Costo:</strong> ${{ object.costo }}</p>
+
+<hr>
+
+<a href="{% url 'fichas:consulta_editar' object.pk %}" class="btn btn-warning">Editar</a>
+<a href="{% url 'fichas:consulta_eliminar' object.pk %}" class="btn btn-danger">Eliminar</a>
+<a href="{% url 'fichas:consulta_lista' %}" class="cancel-link">Volver</a>
+
+{% endblock %}

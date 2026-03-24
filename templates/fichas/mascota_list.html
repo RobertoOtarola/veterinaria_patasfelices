@@ -34,6 +34,19 @@
     {% endfor %}
     </tbody>
 </table>
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
+    {% endif %}
+    <span class="current">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Siguiente &raquo;</a>
+    {% endif %}
+</div>
+{% endif %}
+
 {% else %}
 <p>No hay mascotas registradas aún.</p>
 {% endif %}

@@ -15,6 +15,8 @@
 
 <h2>Consultas Médicas</h2>
 
+<a href="{% url 'fichas:consulta_crear' %}" class="btn btn-success">Nueva consulta</a>
+
 {% if object.consultamedica_set.all %}
 <table>
     <thead>
@@ -23,6 +25,7 @@
             <th>Motivo</th>
             <th>Diagnóstico</th>
             <th>Costo</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -32,6 +35,11 @@
             <td>{{ c.motivo }}</td>
             <td>{{ c.diagnostico }}</td>
             <td>${{ c.costo }}</td>
+            <td>
+                <a href="{% url 'fichas:consulta_detalle' c.pk %}" class="btn btn-primary">Ver</a>
+                <a href="{% url 'fichas:consulta_editar' c.pk %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'fichas:consulta_eliminar' c.pk %}" class="btn btn-danger">Eliminar</a>
+            </td>
         </tr>
     {% endfor %}
     </tbody>

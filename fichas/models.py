@@ -1,4 +1,6 @@
+import re
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class Dueno(models.Model):
@@ -10,6 +12,13 @@ class Dueno(models.Model):
 
     def __str__(self):
         return f"{self.nombre} ({self.rut})"
+
+    def clean(self):
+        super().clean()
+        if self.rut and not re.match(r'^\d{1,2}\.\d{3}\.\d{3}-[\dkK]$', self.rut):
+            raise ValidationError(
+                {'rut': 'El RUT debe tener el formato 12.345.678-9'}
+            )
 
     class Meta:
         ordering = ['nombre']
