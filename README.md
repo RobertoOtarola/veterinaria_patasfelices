@@ -105,37 +105,37 @@ veterinaria_patasfelices/
 ├── .env.example
 ├── .gitignore
 ├── LICENSE
-├── veterinaria_patasfelices/          # Configuración del proyecto
+├── veterinaria_patasfelices/           # Configuración del proyecto
 │   ├── __init__.py
 │   ├── urls.py
 │   ├── wsgi.py
 │   ├── asgi.py
 │   └── settings/
-│       ├── __init__.py                # Selecciona entorno (dev/prod)
-│       ├── base.py                    # Configuración compartida
-│       ├── development.py             # SQLite, DEBUG=True
-│       └── production.py              # PostgreSQL (Supabase), DEBUG=False
-├── fichas/                            # App principal
+│       ├── __init__.py                 # Selecciona entorno (dev/prod)
+│       ├── base.py                     # Configuración compartida
+│       ├── development.py              # SQLite, DEBUG=True
+│       └── production.py               # PostgreSQL (Supabase), DEBUG=False
+├── fichas/                             # App principal
 │   ├── __init__.py
-│   ├── models.py                      # Dueno, Mascota, ConsultaMedica
-│   ├── views.py                       # 10 CBVs + HomeView
-│   ├── urls.py                        # 10 rutas CRUD + inicio
-│   ├── admin.py                       # 3 modelos registrados
+│   ├── models.py                       # Dueno, Mascota, ConsultaMedica
+│   ├── views.py                        # 10 CBVs + HomeView
+│   ├── urls.py                         # 10 rutas CRUD + inicio
+│   ├── admin.py                        # 3 modelos registrados
 │   ├── apps.py
 │   ├── tests.py
 │   └── migrations/
 └── templates/
     └── fichas/
-        ├── base.html                  # Template base con nav y CSS
-        ├── inicio.html                # Página de inicio
-        ├── dueno_list.html            # Tabla de dueños
-        ├── dueno_detail.html          # Detalle + mascotas asociadas
-        ├── dueno_form.html            # Crear/editar dueño
-        ├── dueno_confirm_delete.html  # Confirmación de eliminación
-        ├── mascota_list.html          # Tabla de mascotas
-        ├── mascota_detail.html        # Detalle + consultas médicas
-        ├── mascota_form.html          # Crear/editar mascota
-        └── mascota_confirm_delete.html
+        ├── base.html                   # Template base con nav y CSS
+        ├── inicio.html                 # Página de inicio
+        ├── dueno_list.html             # Tabla de dueños
+        ├── dueno_detail.html           # Detalle + mascotas asociadas
+        ├── dueno_form.html             # Crear/editar dueño
+        ├── dueno_confirm_delete.html   # Confirmación de eliminación
+        ├── mascota_list.html           # Tabla de mascotas
+        ├── mascota_detail.html         # Detalle + consultas médicas
+        ├── mascota_form.html           # Crear/editar mascota
+        └── mascota_confirm_delete.html # Confirmación de eliminación
 ```
 
 ---
