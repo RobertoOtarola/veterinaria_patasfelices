@@ -208,3 +208,6 @@ __marimo__/
 
 # Consignas del proyecto
 practica_clase_*.md
+
+# Planes de implementación del proyecto
+implementation_plan_*.md
