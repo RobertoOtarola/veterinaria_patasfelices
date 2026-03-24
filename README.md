@@ -1,45 +1,41 @@
-# 🐾 Clínica Veterinaria "PatasFelices"
+# 🐾 Veterinaria "PatasFelices"
 
-Aplicación web desarrollada con Django para la gestión de dueños y mascotas en una clínica veterinaria. Permite administrar registros, visualizar relaciones entre entidades y realizar operaciones CRUD completas.
+Aplicación web desarrollada con Django para la gestión de dueños, mascotas y consultas médicas en una clínica veterinaria ficticia. Permite realizar operaciones CRUD completas desde el navegador.
 
 ---
 
 ## 🚀 Tecnologías utilizadas
 
-* **Backend:** Django (Python)
-* **Base de datos:** SQLite (desarrollo)
-* **Frontend:** Django Templates (HTML)
-* **Gestión de entorno:** python-dotenv
-* **Control de versiones:** Git + GitHub
+| Tecnología | Uso |
+|---|---|
+| **Django 6.0** | Backend y templates |
+| **SQLite** | Base de datos en desarrollo |
+| **PostgreSQL (Supabase)** | Base de datos en producción |
+| **python-dotenv** | Variables de entorno |
+| **dj-database-url** | Configuración de BD por URL |
+| **Git + GitHub** | Control de versiones |
 
 ---
 
 ## 📌 Funcionalidades principales
 
 ### 🧑‍⚕️ Dueños
-
-* Crear, listar, editar y eliminar dueños
-* Visualizar detalle de cada dueño
-* Ver mascotas asociadas
+* Crear, listar, ver detalle, editar y eliminar dueños
+* Ver mascotas asociadas desde el detalle
 
 ### 🐶 Mascotas
+* Crear, listar, ver detalle, editar y eliminar mascotas
+* Seleccionar dueño desde dropdown
+* Ver consultas médicas desde el detalle
 
-* Crear, listar, editar y eliminar mascotas
-* Asociar mascotas a dueños
-* Visualizar detalle de cada mascota
+### 🏥 Consultas Médicas
+* Modelo registrado con motivo, diagnóstico, tratamiento y costo
+* Listado visible desde el detalle de cada mascota
+* Gestión vía panel de administración
 
 ### 🔗 Relaciones
-
-* Relación **1:N (Dueño → Mascotas)**
-* Navegación entre entidades
-
----
-
-## 📊 Dashboard (Inicio)
-
-* Total de dueños registrados
-* Total de mascotas registradas
-* Acceso rápido a módulos principales
+* **Dueño → Mascotas** (1:N)
+* **Mascota → Consultas Médicas** (1:N)
 
 ---
 
@@ -52,8 +48,6 @@ git clone https://github.com/RobertoOtarola/veterinaria_patasfelices.git
 cd veterinaria_patasfelices
 ```
 
----
-
 ### 2. Crear entorno virtual
 
 ```bash
@@ -62,36 +56,35 @@ source .venv/bin/activate  # Mac/Linux
 .venv\Scripts\activate     # Windows
 ```
 
----
-
 ### 3. Instalar dependencias
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
 ### 4. Configurar variables de entorno
 
-Crear archivo `.env` en la raíz:
+Copiar el archivo de ejemplo y completar los valores:
+
+```bash
+cp .env.example .env
+```
+
+Variables requeridas:
 
 ```env
 DJANGO_ENV=development
-SECRET_KEY=your_secret_key
+SECRET_KEY=tu-clave-secreta
 DEBUG=True
+DATABASE_URL=postgres://user:password@host:port/dbname
 ```
 
----
-
-### 5. Aplicar migraciones
+### 5. Aplicar migraciones y crear superusuario
 
 ```bash
-python manage.py makemigrations
 python manage.py migrate
+python manage.py createsuperuser
 ```
-
----
 
 ### 6. Ejecutar servidor
 
@@ -99,11 +92,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Acceder a:
-
-```
-http://127.0.0.1:8000/
-```
+Acceder a: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ---
 
@@ -111,16 +100,42 @@ http://127.0.0.1:8000/
 
 ```
 veterinaria_patasfelices/
-├── fichas/
-│   ├── models.py
-│   ├── views.py
-│   ├── urls.py
-│   └── templates/
-├── templates/
-│   └── fichas/
 ├── manage.py
 ├── requirements.txt
-└── .env
+├── .env.example
+├── .gitignore
+├── LICENSE
+├── veterinaria_patasfelices/          # Configuración del proyecto
+│   ├── __init__.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   ├── asgi.py
+│   └── settings/
+│       ├── __init__.py                # Selecciona entorno (dev/prod)
+│       ├── base.py                    # Configuración compartida
+│       ├── development.py             # SQLite, DEBUG=True
+│       └── production.py              # PostgreSQL (Supabase), DEBUG=False
+├── fichas/                            # App principal
+│   ├── __init__.py
+│   ├── models.py                      # Dueno, Mascota, ConsultaMedica
+│   ├── views.py                       # 10 CBVs + HomeView
+│   ├── urls.py                        # 10 rutas CRUD + inicio
+│   ├── admin.py                       # 3 modelos registrados
+│   ├── apps.py
+│   ├── tests.py
+│   └── migrations/
+└── templates/
+    └── fichas/
+        ├── base.html                  # Template base con nav y CSS
+        ├── inicio.html                # Página de inicio
+        ├── dueno_list.html            # Tabla de dueños
+        ├── dueno_detail.html          # Detalle + mascotas asociadas
+        ├── dueno_form.html            # Crear/editar dueño
+        ├── dueno_confirm_delete.html  # Confirmación de eliminación
+        ├── mascota_list.html          # Tabla de mascotas
+        ├── mascota_detail.html        # Detalle + consultas médicas
+        ├── mascota_form.html          # Crear/editar mascota
+        └── mascota_confirm_delete.html
 ```
 
 ---
@@ -128,28 +143,22 @@ veterinaria_patasfelices/
 ## 🧠 Conceptos aplicados
 
 * Arquitectura **MVT (Model-View-Template)**
-* Class-Based Views (CBV)
-* ORM de Django
-* Relaciones entre modelos (ForeignKey)
+* Class-Based Views (ListView, DetailView, CreateView, UpdateView, DeleteView)
+* ORM de Django con relaciones ForeignKey (1:N)
 * Template inheritance (`base.html`)
-* Buenas prácticas con `.env` y configuración
+* Protección CSRF en formularios
+* Separación de settings por entorno (`base`, `development`, `production`)
+* Variables de entorno con `.env` y `python-dotenv`
 
 ---
 
 ## 🔮 Mejoras futuras
 
-* 📅 Módulo de consultas médicas
 * 🔐 Sistema de autenticación de usuarios
 * 📊 Dashboard con métricas avanzadas
-* 🐘 Migración a PostgreSQL
 * 🐳 Dockerización del proyecto
 * 🌐 API REST con Django REST Framework
-
----
-
-## 📸 Capturas (opcional)
-
-*Agregar screenshots del sistema en funcionamiento*
+* ✅ Tests unitarios y de integración
 
 ---
 
@@ -157,7 +166,7 @@ veterinaria_patasfelices/
 
 **Roberto Otárola**
 
-* GitHub: https://github.com/RobertoOtarola
+* GitHub: [RobertoOtarola](https://github.com/RobertoOtarola)
 
 ---
 
