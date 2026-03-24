@@ -5,7 +5,7 @@ app_name = 'fichas'
 
 urlpatterns = [
     # HOME
-    path('', views.HomeView.as_view(), name='inicio'),
+    path('', views.inicio, name='inicio'),
 
     # ===== DUEÑOS =====
     path('duenos/', views.DuenoListView.as_view(), name='dueno_lista'),
@@ -20,4 +20,11 @@ urlpatterns = [
     path('mascotas/nuevo/', views.MascotaCreateView.as_view(), name='mascota_crear'),
     path('mascotas/editar/<int:pk>/', views.MascotaUpdateView.as_view(), name='mascota_editar'),
     path('mascotas/eliminar/<int:pk>/', views.MascotaDeleteView.as_view(), name='mascota_eliminar'),
+
+    # ===== CONSULTAS MÉDICAS =====
+    path('consultas/', views.ConsultaListView.as_view(), name='consulta_lista'),
+    path('consultas/<int:pk>/', views.ConsultaDetailView.as_view(), name='consulta_detalle'),
+    path('consultas/nuevo/', views.ConsultaCreateView.as_view(), name='consulta_crear'),
+    path('consultas/editar/<int:pk>/', views.ConsultaUpdateView.as_view(), name='consulta_editar'),
+    path('consultas/eliminar/<int:pk>/', views.ConsultaDeleteView.as_view(), name='consulta_eliminar'),
 ]

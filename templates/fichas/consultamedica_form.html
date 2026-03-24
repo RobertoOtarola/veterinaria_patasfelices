@@ -1,0 +1,15 @@
+{% extends 'fichas/base.html' %}
+
+{% block title %}{% if object %}Editar{% else %}Nueva{% endif %} Consulta — PatasFelices{% endblock %}
+
+{% block content %}
+<h2>{% if object %}Editar Consulta Médica{% else %}Nueva Consulta Médica{% endif %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+    <a href="{% url 'fichas:consulta_lista' %}" class="cancel-link">Cancelar</a>
+</form>
+
+{% endblock %}

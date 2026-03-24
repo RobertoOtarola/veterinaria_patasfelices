@@ -1,0 +1,54 @@
+{% extends 'fichas/base.html' %}
+
+{% block title %}Consultas Médicas — PatasFelices{% endblock %}
+
+{% block content %}
+<h1>Consultas Médicas</h1>
+
+<a href="{% url 'fichas:consulta_crear' %}" class="btn btn-success">Nueva Consulta</a>
+
+{% if object_list %}
+<table>
+    <thead>
+        <tr>
+            <th>Mascota</th>
+            <th>Motivo</th>
+            <th>Fecha</th>
+            <th>Costo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for c in object_list %}
+        <tr>
+            <td>{{ c.mascota.nombre }}</td>
+            <td>{{ c.motivo }}</td>
+            <td>{{ c.fecha }}</td>
+            <td>${{ c.costo }}</td>
+            <td>
+                <a href="{% url 'fichas:consulta_detalle' c.pk %}" class="btn btn-primary">Ver</a>
+                <a href="{% url 'fichas:consulta_editar' c.pk %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'fichas:consulta_eliminar' c.pk %}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
+    {% endif %}
+    <span class="current">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Siguiente &raquo;</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% else %}
+<p>No hay consultas médicas registradas aún.</p>
+{% endif %}
+
+{% endblock %}

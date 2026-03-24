@@ -7,6 +7,11 @@
 
 <a href="{% url 'fichas:dueno_crear' %}" class="btn btn-success">Nuevo Dueño</a>
 
+<form method="get" class="search-form">
+    <input type="text" name="q" placeholder="Buscar por nombre o RUT..." value="{{ request.GET.q|default:'' }}">
+    <button type="submit">Buscar</button>
+</form>
+
 {% if object_list %}
 <table>
     <thead>
@@ -34,6 +39,19 @@
     {% endfor %}
     </tbody>
 </table>
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo; Anterior</a>
+    {% endif %}
+    <span class="current">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Siguiente &raquo;</a>
+    {% endif %}
+</div>
+{% endif %}
+
 {% else %}
 <p>No hay dueños registrados aún.</p>
 {% endif %}

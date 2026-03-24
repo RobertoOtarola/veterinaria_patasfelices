@@ -1,30 +1,53 @@
 {% extends 'fichas/base.html' %}
 
+{% block title %}Detalle del Dueño — PatasFelices{% endblock %}
+
 {% block content %}
 <h1>Detalle del Dueño</h1>
 
 <p><strong>Nombre:</strong> {{ object.nombre }}</p>
 <p><strong>RUT:</strong> {{ object.rut }}</p>
 <p><strong>Teléfono:</strong> {{ object.telefono }}</p>
-<p><strong>Email:</strong> {{ object.email }}</p>
-<p><strong>Dirección:</strong> {{ object.direccion }}</p>
+<p><strong>Email:</strong> {{ object.email|default:"—" }}</p>
+<p><strong>Dirección:</strong> {{ object.direccion|default:"—" }}</p>
 
 <hr>
 
 <h2>Mascotas</h2>
 
-<ul>
-{% for mascota in object.mascota_set.all %}
-    <li>{{ mascota.nombre }}</li>
-{% empty %}
-    <li>No tiene mascotas</li>
-{% endfor %}
-</ul>
+<a href="{% url 'fichas:mascota_crear' %}" class="btn btn-success">Registrar mascota</a>
+
+{% if object.mascota_set.all %}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Especie</th>
+            <th>Raza</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for mascota in object.mascota_set.all %}
+        <tr>
+            <td>{{ mascota.nombre }}</td>
+            <td>{{ mascota.especie }}</td>
+            <td>{{ mascota.raza|default:"—" }}</td>
+            <td>
+                <a href="{% url 'fichas:mascota_detalle' mascota.pk %}" class="btn btn-primary">Ver</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No tiene mascotas registradas.</p>
+{% endif %}
 
 <hr>
 
-<a href="{% url 'fichas:dueno_editar' object.pk %}">Editar</a>
-<a href="{% url 'fichas:dueno_eliminar' object.pk %}">Eliminar</a>
-<a href="{% url 'fichas:dueno_lista' %}">Volver</a>
+<a href="{% url 'fichas:dueno_editar' object.pk %}" class="btn btn-warning">Editar</a>
+<a href="{% url 'fichas:dueno_eliminar' object.pk %}" class="btn btn-danger">Eliminar</a>
+<a href="{% url 'fichas:dueno_lista' %}" class="cancel-link">Volver</a>
 
 {% endblock %}

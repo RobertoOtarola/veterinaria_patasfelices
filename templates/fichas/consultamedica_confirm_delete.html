@@ -1,0 +1,16 @@
+{% extends 'fichas/base.html' %}
+
+{% block title %}Eliminar Consulta — PatasFelices{% endblock %}
+
+{% block content %}
+<h2>Confirmar Eliminación</h2>
+
+<p>¿Estás seguro de que deseas eliminar la consulta de <strong>{{ object.mascota.nombre }}</strong> por motivo <strong>{{ object.motivo }}</strong>?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+    <a href="{% url 'fichas:consulta_lista' %}" class="cancel-link">Cancelar</a>
+</form>
+
+{% endblock %}

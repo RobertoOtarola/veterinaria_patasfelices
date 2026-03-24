@@ -1,9 +1,29 @@
 {% extends 'fichas/base.html' %}
 
-{% block content %}
-<h1>Bienvenido a PatasFelices</h1>
+{% block title %}Inicio — PatasFelices{% endblock %}
 
-<a href="{% url 'fichas:dueno_lista' %}">Ver Dueños</a>
-<a href="{% url 'fichas:mascota_lista' %}">Ver Mascotas</a>
+{% block content %}
+<h1>Bienvenido a PatasFelices 🐾</h1>
+
+<div class="dashboard">
+    <div class="card">
+        <h3>Dueños registrados</h3>
+        <div class="count">{{ total_duenos }}</div>
+    </div>
+    <div class="card">
+        <h3>Mascotas registradas</h3>
+        <div class="count">{{ total_mascotas }}</div>
+    </div>
+    <div class="card">
+        <h3>Consultas realizadas</h3>
+        <div class="count">{{ total_consultas }}</div>
+    </div>
+</div>
+
+<h2>Accesos rápidos</h2>
+
+<a href="{% url 'fichas:dueno_crear' %}" class="btn btn-success">Nuevo Dueño</a>
+<a href="{% url 'fichas:mascota_crear' %}" class="btn btn-success">Nueva Mascota</a>
+<a href="{% url 'fichas:consulta_crear' %}" class="btn btn-success">Nueva Consulta</a>
 
 {% endblock %}
