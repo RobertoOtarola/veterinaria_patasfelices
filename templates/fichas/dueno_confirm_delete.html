@@ -1,0 +1,16 @@
+{% extends 'fichas/base.html' %}
+
+{% block title %}Eliminar Dueño — PatasFelices{% endblock %}
+
+{% block content %}
+<h2>Confirmar Eliminación</h2>
+
+<p>¿Estás seguro de que deseas eliminar al dueño <strong>{{ object.nombre }}</strong>?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+    <a href="{% url 'fichas:dueno_lista' %}" class="cancel-link">Cancelar</a>
+</form>
+
+{% endblock %}

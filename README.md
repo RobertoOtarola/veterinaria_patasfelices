@@ -1,4 +1,4 @@
-# 🐾 Veterinaria PatasFelices
+# 🐾 Clínica Veterinaria "PatasFelices"
 
 Aplicación web desarrollada con Django para la gestión de dueños y mascotas en una clínica veterinaria. Permite administrar registros, visualizar relaciones entre entidades y realizar operaciones CRUD completas.
 

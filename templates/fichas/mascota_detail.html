@@ -1,0 +1,49 @@
+{% extends 'fichas/base.html' %}
+
+{% block title %}{{ object.nombre }} — PatasFelices{% endblock %}
+
+{% block content %}
+<h1>Detalle de Mascota</h1>
+
+<p><strong>Nombre:</strong> {{ object.nombre }}</p>
+<p><strong>Especie:</strong> {{ object.especie }}</p>
+<p><strong>Raza:</strong> {{ object.raza|default:"No especificada" }}</p>
+<p><strong>Fecha de nacimiento:</strong> {{ object.fecha_nacimiento|default:"No registrada" }}</p>
+<p><strong>Dueño:</strong> <a href="{% url 'fichas:dueno_detalle' object.dueno.pk %}">{{ object.dueno.nombre }}</a></p>
+
+<hr>
+
+<h2>Consultas Médicas</h2>
+
+{% if object.consultamedica_set.all %}
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Motivo</th>
+            <th>Diagnóstico</th>
+            <th>Costo</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for c in object.consultamedica_set.all %}
+        <tr>
+            <td>{{ c.fecha }}</td>
+            <td>{{ c.motivo }}</td>
+            <td>{{ c.diagnostico }}</td>
+            <td>${{ c.costo }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No hay consultas médicas registradas para esta mascota.</p>
+{% endif %}
+
+<hr>
+
+<a href="{% url 'fichas:mascota_editar' object.pk %}" class="btn btn-warning">Editar</a>
+<a href="{% url 'fichas:mascota_eliminar' object.pk %}" class="btn btn-danger">Eliminar</a>
+<a href="{% url 'fichas:mascota_lista' %}" class="cancel-link">Volver</a>
+
+{% endblock %}

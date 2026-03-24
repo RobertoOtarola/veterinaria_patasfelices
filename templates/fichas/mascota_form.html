@@ -1,13 +1,15 @@
 {% extends 'fichas/base.html' %}
 
+{% block title %}{% if object %}Editar{% else %}Crear{% endif %} Mascota — PatasFelices{% endblock %}
+
 {% block content %}
-<h2>Crear Mascota</h2>
+<h2>{% if object %}Editar Mascota{% else %}Nueva Mascota{% endif %}</h2>
 
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Guardar</button>
+    <a href="{% url 'fichas:mascota_lista' %}" class="cancel-link">Cancelar</a>
 </form>
 
-<a href="{% url 'fichas:mascota_lista' %}">Volver</a>
 {% endblock %}

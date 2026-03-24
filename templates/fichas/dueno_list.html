@@ -1,16 +1,41 @@
 {% extends 'fichas/base.html' %}
 
+{% block title %}Dueños — PatasFelices{% endblock %}
+
 {% block content %}
 <h1>Dueños</h1>
 
-<a href="{% url 'fichas:dueno_crear' %}">Nuevo</a>
+<a href="{% url 'fichas:dueno_crear' %}" class="btn btn-success">Nuevo Dueño</a>
 
-<ul>
-{% for d in object_list %}
-    <li>{{ d.nombre }}</li>
-{% empty %}
-    <li>No hay datos</li>
-{% endfor %}
-</ul>
+{% if object_list %}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>RUT</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for d in object_list %}
+        <tr>
+            <td>{{ d.nombre }}</td>
+            <td>{{ d.rut }}</td>
+            <td>{{ d.telefono }}</td>
+            <td>{{ d.email }}</td>
+            <td>
+                <a href="{% url 'fichas:dueno_detalle' d.pk %}" class="btn btn-primary">Ver</a>
+                <a href="{% url 'fichas:dueno_editar' d.pk %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'fichas:dueno_eliminar' d.pk %}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No hay dueños registrados aún.</p>
+{% endif %}
 
 {% endblock %}

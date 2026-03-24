@@ -1,16 +1,41 @@
 {% extends 'fichas/base.html' %}
 
+{% block title %}Mascotas — PatasFelices{% endblock %}
+
 {% block content %}
 <h1>Mascotas</h1>
 
-<a href="{% url 'fichas:mascota_crear' %}">Nueva mascota</a>
+<a href="{% url 'fichas:mascota_crear' %}" class="btn btn-success">Nueva Mascota</a>
 
-<ul>
-{% for m in object_list %}
-    <li>{{ m.nombre }} ({{ m.dueno.nombre }})</li>
-{% empty %}
-    <li>No hay mascotas</li>
-{% endfor %}
-</ul>
+{% if object_list %}
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Especie</th>
+            <th>Raza</th>
+            <th>Dueño</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for m in object_list %}
+        <tr>
+            <td>{{ m.nombre }}</td>
+            <td>{{ m.especie }}</td>
+            <td>{{ m.raza }}</td>
+            <td>{{ m.dueno.nombre }}</td>
+            <td>
+                <a href="{% url 'fichas:mascota_detalle' m.pk %}" class="btn btn-primary">Ver</a>
+                <a href="{% url 'fichas:mascota_editar' m.pk %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'fichas:mascota_eliminar' m.pk %}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No hay mascotas registradas aún.</p>
+{% endif %}
 
 {% endblock %}

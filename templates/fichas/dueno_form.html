@@ -1,12 +1,15 @@
 {% extends 'fichas/base.html' %}
 
+{% block title %}{% if object %}Editar{% else %}Crear{% endif %} Dueño — PatasFelices{% endblock %}
+
 {% block content %}
-<h2>Crear Dueño</h2>
+<h2>{% if object %}Editar Dueño{% else %}Nuevo Dueño{% endif %}</h2>
 
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Guardar</button>
+    <a href="{% url 'fichas:dueno_lista' %}" class="cancel-link">Cancelar</a>
 </form>
 
 {% endblock %}
