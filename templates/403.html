@@ -1,0 +1,12 @@
+{% extends 'fichas/base.html' %}
+
+{% block title %}403 — Acceso Denegado{% endblock %}
+
+{% block content %}
+<h1>403</h1>
+
+<p>Acceso denegado — no tienes los permisos necesarios para ver esta página.</p>
+
+<a href="{% url 'fichas:dueno_lista' %}" class="btn btn-primary">Volver a la lista de dueños</a>
+
+{% endblock %}

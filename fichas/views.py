@@ -4,6 +4,7 @@ from django.views.generic import (
 )
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 from django.db.models import Q
 
@@ -53,9 +54,10 @@ class DuenoUpdateView(SuccessMessageMixin, UpdateView):
     success_message = "Dueño actualizado exitosamente."
 
 
-class DuenoDeleteView(DeleteView):
+class DuenoDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Dueno
     success_url = reverse_lazy('fichas:dueno_lista')
+    permission_required = 'fichas.delete_dueno'
 
     def post(self, request, *args, **kwargs):
         messages.success(request, "Dueño eliminado exitosamente.")
@@ -86,9 +88,10 @@ class MascotaUpdateView(SuccessMessageMixin, UpdateView):
     success_message = "Mascota actualizada exitosamente."
 
 
-class MascotaDeleteView(DeleteView):
+class MascotaDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Mascota
     success_url = reverse_lazy('fichas:mascota_lista')
+    permission_required = 'fichas.delete_mascota'
 
     def post(self, request, *args, **kwargs):
         messages.success(request, "Mascota eliminada exitosamente.")
