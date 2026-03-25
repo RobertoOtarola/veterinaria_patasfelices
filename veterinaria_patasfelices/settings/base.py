@@ -43,3 +43,5 @@ TEMPLATES = [
 ]
 
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/admin/login/'
