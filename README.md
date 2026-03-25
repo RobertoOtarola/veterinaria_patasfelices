@@ -1,6 +1,6 @@
 # 🐾 Veterinaria "PatasFelices"
 
-Aplicación web desarrollada con Django para la gestión de dueños, mascotas y consultas médicas en una clínica veterinaria ficticia. Permite realizar operaciones CRUD completas desde el navegador.
+Aplicación web desarrollada con Django para la gestión de dueños, mascotas y consultas médicas en una clínica veterinaria ficticia. Incluye CRUD completo, panel de administración personalizado y sistema de permisos por roles.
 
 ---
 
@@ -29,13 +29,25 @@ Aplicación web desarrollada con Django para la gestión de dueños, mascotas y 
 * Ver consultas médicas desde el detalle
 
 ### 🏥 Consultas Médicas
-* Modelo registrado con motivo, diagnóstico, tratamiento y costo
+* CRUD completo con vistas y templates
 * Listado visible desde el detalle de cada mascota
 * Gestión vía panel de administración
 
 ### 🔗 Relaciones
 * **Dueño → Mascotas** (1:N)
 * **Mascota → Consultas Médicas** (1:N)
+
+### 🛡️ Admin Personalizado
+* Inlines: mascotas dentro del dueño, consultas dentro de la mascota
+* Columnas calculadas: cantidad de mascotas, costo total de consultas
+* Acciones masivas: marcar consultas sin costo, exportar dueños
+* Branding "PatasFelices" en el panel
+
+### 🔐 Permisos y Seguridad
+* Vistas de eliminación protegidas con `PermissionRequiredMixin`
+* Usuario `asistente_clinica` con rol de editor (sin delete)
+* Grupo `Editores Fichas` con permisos reutilizables
+* Página 403 personalizada
 
 ---
 
@@ -86,7 +98,15 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-### 6. Ejecutar servidor
+### 6. Crear usuario editor y grupo de permisos
+
+```bash
+python manage.py crear_editor
+```
+
+Esto crea el usuario `asistente_clinica` y el grupo `Editores Fichas` automáticamente.
+
+### 7. Ejecutar servidor
 
 ```bash
 python manage.py runserver
@@ -118,24 +138,32 @@ veterinaria_patasfelices/
 ├── fichas/                             # App principal
 │   ├── __init__.py
 │   ├── models.py                       # Dueno, Mascota, ConsultaMedica
-│   ├── views.py                        # 10 CBVs + HomeView
-│   ├── urls.py                         # 10 rutas CRUD + inicio
-│   ├── admin.py                        # 3 modelos registrados
+│   ├── views.py                        # 15 CBVs + inicio (con permisos)
+│   ├── urls.py                         # 15 rutas CRUD + inicio
+│   ├── admin.py                        # Admin personalizado con inlines y acciones
 │   ├── apps.py
 │   ├── tests.py
-│   └── migrations/
+│   ├── migrations/
+│   └── management/
+│       └── commands/
+│           └── crear_editor.py         # Crea usuario y grupo de permisos
 └── templates/
+    ├── 403.html                        # Página de error personalizada
     └── fichas/
         ├── base.html                   # Template base con nav y CSS
-        ├── inicio.html                 # Página de inicio
-        ├── dueno_list.html             # Tabla de dueños
+        ├── inicio.html                 # Dashboard con contadores
+        ├── dueno_list.html             # Tabla con búsqueda y paginación
         ├── dueno_detail.html           # Detalle + mascotas asociadas
         ├── dueno_form.html             # Crear/editar dueño
         ├── dueno_confirm_delete.html   # Confirmación de eliminación
-        ├── mascota_list.html           # Tabla de mascotas
+        ├── mascota_list.html           # Tabla con paginación
         ├── mascota_detail.html         # Detalle + consultas médicas
         ├── mascota_form.html           # Crear/editar mascota
-        └── mascota_confirm_delete.html # Confirmación de eliminación
+        ├── mascota_confirm_delete.html # Confirmación de eliminación
+        ├── consultamedica_list.html    # Tabla de consultas
+        ├── consultamedica_detail.html  # Detalle de consulta
+        ├── consultamedica_form.html    # Crear/editar consulta
+        └── consultamedica_confirm_delete.html
 ```
 
 ---
@@ -149,16 +177,23 @@ veterinaria_patasfelices/
 * Protección CSRF en formularios
 * Separación de settings por entorno (`base`, `development`, `production`)
 * Variables de entorno con `.env` y `python-dotenv`
+* Admin personalizado con `ModelAdmin`, inlines, acciones y columnas calculadas
+* Sistema de permisos con `LoginRequiredMixin` y `PermissionRequiredMixin`
+* Grupos y roles de usuario (`Editores Fichas`)
+* Management commands personalizados (`crear_editor`)
+* Paginación y búsqueda en vistas de lista
+* Mensajes de éxito con `SuccessMessageMixin`
+* Validación de RUT con `clean()` en el modelo
 
 ---
 
 ## 🔮 Mejoras futuras
 
-* 🔐 Sistema de autenticación de usuarios
-* 📊 Dashboard con métricas avanzadas
 * 🐳 Dockerización del proyecto
 * 🌐 API REST con Django REST Framework
 * ✅ Tests unitarios y de integración
+* 📧 Notificaciones por email
+* 📈 Reportes exportables (CSV/PDF)
 
 ---
 
